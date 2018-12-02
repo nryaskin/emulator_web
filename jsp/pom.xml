@@ -63,6 +63,12 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>1.7.2.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>0.7.4</version>
+        </dependency>
     </dependencies>
 
     <build>

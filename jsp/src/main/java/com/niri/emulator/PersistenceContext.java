@@ -3,6 +3,7 @@ package com.niri.emulator;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -24,7 +25,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class PersistenceContext {
     private static final String[] ENTITY_PACKAGES = {
-            "com.niri.emulator.data"
+            "com.niri.emulator.data.entity"
     };
 
     private static final String PROPERTY_NAME_DB_DRIVER_CLASS = "db.driver";
@@ -90,4 +91,10 @@ public class PersistenceContext {
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
 }
