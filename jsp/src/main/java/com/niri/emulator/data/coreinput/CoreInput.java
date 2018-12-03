@@ -13,6 +13,7 @@ final public class CoreInput {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name="core_input_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

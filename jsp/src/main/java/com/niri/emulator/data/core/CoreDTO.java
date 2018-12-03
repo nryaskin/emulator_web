@@ -12,6 +12,8 @@ public final class CoreDTO {
     @Size(max = Core.MAX_LENGTH_CORE_NAME)
     private String coreName;
 
+    @Size(max = Core.MAX_LENGTH_CORE_PATH)
+    private String corePath;
 
     private List<ProfileDTO> profiles;
 
@@ -49,5 +51,13 @@ public final class CoreDTO {
 
     public void setCoreInput(List<CoreInputDTO> coreInput) {
         this.coreInput = coreInput;
+    }
+
+    public String getCorePath() {
+        return corePath;
+    }
+
+    public void setCorePath(String corePath) {
+        this.corePath = corePath;
     }
 }

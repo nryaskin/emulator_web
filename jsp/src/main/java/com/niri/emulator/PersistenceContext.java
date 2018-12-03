@@ -21,11 +21,10 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = {
         "com.niri.emulator.data"
 })
-
 @EnableTransactionManagement
 public class PersistenceContext {
     private static final String[] ENTITY_PACKAGES = {
-            "com.niri.emulator.data.entity"
+            "com.niri.emulator.data"
     };
 
     private static final String PROPERTY_NAME_DB_DRIVER_CLASS = "db.driver";

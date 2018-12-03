@@ -1,5 +1,6 @@
 package com.niri.emulator.data.core;
 
+import com.niri.emulator.data.coreinput.CoreInputDTO;
 import com.niri.emulator.data.util.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CoreCrudService implements CrudService<CoreDTO> {
@@ -45,31 +48,55 @@ public class CoreCrudService implements CrudService<CoreDTO> {
     @Transactional
     @Override
     public CoreDTO create(CoreDTO newEntry) {
+        Core created = null;
+        try {
+            created = convertToEntity(newEntry);
+            created = repository.save(created);
 
-        return null;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return convertToDto(created);
     }
 
     @Transactional
     @Override
     public CoreDTO delete(Long id) {
-        return null;
+        Core deleted = repository.findOne(id);
+
+        repository.delete(deleted);
+
+        return convertToDto(deleted);
+
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<CoreDTO> findAll() {
-        return null;
+        List<Core> coreEntries = new ArrayList<>();
+        repository.findAll().forEach(coreEntries::add);
+
+        return coreEntries.stream()
+                .map(core -> convertToDto(core))
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     @Override
     public CoreDTO findById(Long id) {
-        return null;
+        Core core = repository.findOne(id);
+
+        return convertToDto(core);
     }
 
     @Transactional
     @Override
     public CoreDTO update(CoreDTO updatedEntry) {
-        return null;
+        Core core = repository.findOne(updatedEntry.getId());
+
+        core.update(updatedEntry.getCoreName());
+
+        return convertToDto(core);
     }
 }
