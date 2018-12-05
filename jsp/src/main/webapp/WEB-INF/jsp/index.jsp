@@ -1,65 +1,48 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Core crud.</title>
+</head>
+<body>
+	<br>
+	<div style="text-align: center">
+		<h2>
+			Core crud<br/>
 
-<jsp:include page="header.jsp"></jsp:include>
-
-<h3>Core Registration</h3>
-<br>
-<form action='/index/add' method='post'>
-
-    <table class='table table-hover table-responsive table-bordered'>
-
+		</h2>
+		<p><table style="width:100%">
+            <tr>
+                <th>Core name</th>
+                <th>Core path</th>
+            </tr>
+              <c:forEach items ="${list}" var = "core">
+                 <tr>
+                    <td><c:out value = "${core.coreName}"/></td>
+                    <td><c:out value = "${core.corePath}"/></td>
+                    <td></td>
+                 </tr>
+              </c:forEach>
+        </table>
+        <p><form:form action = "add" method = "POST" modelAttribute="cr">
+        <table>
         <tr>
-            <td><b>Core</b></td>
-            <td><input type='text' name='core_name' class='form-control'  required/></td>
+            <td><form:label path="coreName">Core Name</form:label></td>
+            <td><form:input path="coreName"/></td>
         </tr>
-
         <tr>
-            <td><b>Path</b></td>
-            <td><input type='text' name='path' class='form-control' required /></td>
+            <td><form:label path="corePath">Core Name</form:label></td>
+            <td><form:input path="corePath"/></td>
         </tr>
-
         <tr>
-            <td></td>
-            <td>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </td>
+            <td><input type="submit" value="Submit"/></td>
         </tr>
+        </table>
+        </form:form>
 
-    </table>
-    <b><c:out value="${danger}"></c:out></b>
-</form>
-
-
-
-<h3>List Of Cores</h3>
-<br>
-<table class="table table-hover">
-
-    <thead>
-      <tr>
-        <th><b>Core Name</b></th>
-        <th><b>Core Path</b></th>
-      </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${list}" var="cr">
-      <tr>
-        <td><c:out value="${cr.name}"></c:out></td>
-        <td><c:out value="${cr.path}"></c:out></td>
-        <td>
-              <a href="/index/${cr.id}/edit">
-                  <button type="submit" class="btn btn-primary">Edit Core</button>
-                  </a>
-                    </td>
-                    <td>
-                     <a href="/index/${cr.id}/delete">
-                        <button type="submit" class="btn btn-primary">Delete Core</button>
-                        </a>
-                    </td>
-              </tr>
-          </c:forEach>
-    </tbody>
-  </table>
-</div>
-
-<jsp:include page="footer.jsp"></jsp:include>
+	</div>
+</body>
+</html>

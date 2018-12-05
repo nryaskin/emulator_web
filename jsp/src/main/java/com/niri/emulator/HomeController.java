@@ -6,6 +6,8 @@ import com.niri.emulator.data.util.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,25 +16,21 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-    private CoreCrudService coreCrudService;
+    private CrudService<CoreDTO> coreCrudService;
 
     @Autowired
-    public void setCoreCrudService(CoreCrudService coreCrudService) {
+    public void setCoreCrudService(CrudService<CoreDTO> coreCrudService) {
         this.coreCrudService = coreCrudService;
     }
 
     @Value("${home.message}")
     private String message;
 
-    @RequestMapping("/")
-    public String index(Map<String, Object> model) {
-        return "/index";
-    }
-
     @RequestMapping(value = "", method=RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView model = new ModelAndView("index");
         model.addObject("list", coreCrudService.findAll());
+        model.addObject("cr", new CoreDTO());
         return model;
     }
 
@@ -52,7 +50,7 @@ public class HomeController {
         else{
             model.addObject("danger","Something Going Bad" );
         }
-        return new ModelAndView("redirect:/index");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)

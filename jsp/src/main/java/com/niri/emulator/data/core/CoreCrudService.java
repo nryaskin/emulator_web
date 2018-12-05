@@ -31,7 +31,7 @@ public class CoreCrudService implements CrudService<CoreDTO> {
         Core core = modelMapper.map(coreDTO, Core.class);
 
         if (coreDTO.getId() != null) {
-            Core oldCore = repository.findOne(core.getId());
+            Core oldCore = repository.findById(core.getId()).get();
             /*
              *  Maybe do something if exists.
              *
@@ -63,7 +63,7 @@ public class CoreCrudService implements CrudService<CoreDTO> {
     @Transactional
     @Override
     public CoreDTO delete(Long id) {
-        Core deleted = repository.findOne(id);
+        Core deleted = repository.findById(id).get();
 
         repository.delete(deleted);
 
@@ -85,7 +85,7 @@ public class CoreCrudService implements CrudService<CoreDTO> {
     @Transactional(readOnly = true)
     @Override
     public CoreDTO findById(Long id) {
-        Core core = repository.findOne(id);
+        Core core = repository.findById(id).get();
 
         return convertToDto(core);
     }
@@ -93,7 +93,7 @@ public class CoreCrudService implements CrudService<CoreDTO> {
     @Transactional
     @Override
     public CoreDTO update(CoreDTO updatedEntry) {
-        Core core = repository.findOne(updatedEntry.getId());
+        Core core = repository.findById(updatedEntry.getId()).get();
 
         core.update(updatedEntry.getCoreName());
 
