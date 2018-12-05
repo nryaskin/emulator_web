@@ -11,39 +11,38 @@
 	<br>
 	<div style="text-align: center">
 		<h2>
-			Core crud<br/>
+			Core Input crud<br/>
 
 		</h2>
 		<p><table style="width:100%">
             <tr>
-                <th>Core name</th>
-                <th>Core path</th>
+                <th>Key</th>
+                <th>Action name</th>
             </tr>
-              <c:forEach items ="${list}" var = "core">
+              <c:forEach items ="${keys}" var = "key">
                  <tr>
-                    <td><c:out value = "${core.coreName}"/></td>
-                    <td><c:out value = "${core.corePath}"/></td>
-                    <td><a href="${core.id}/delete">delete</a></td>
-                    <td><a href="${core.id}/keys">Keys</a></td>
+                    <td><c:out value = "${key.key}"/></td>
+                    <td><c:out value = "${key.actionName}"/></td>
+                    <td><a href="/${key.id}/delete">delete</a></td>
                  </tr>
               </c:forEach>
         </table>
-        <p><form:form action = "add" method = "POST" modelAttribute="cr">
+        <p><form:form action = "/${cr.id}/keys/add" method = "POST" modelAttribute="key">
         <table>
         <tr>
-            <td><form:label path="coreName">Core Name</form:label></td>
-            <td><form:input path="coreName"/></td>
+            <td><form:label path="key">Key num:</form:label></td>
+            <td><form:input path="key"/></td>
         </tr>
         <tr>
-            <td><form:label path="corePath">Core Name</form:label></td>
-            <td><form:input path="corePath"/></td>
+            <td><form:label path="actionName">Action name:</form:label></td>
+            <td><form:input path="actionName"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit"/></td>
         </tr>
         </table>
         </form:form>
-
+        <a href="/">back</a>
 	</div>
 </body>
 </html>

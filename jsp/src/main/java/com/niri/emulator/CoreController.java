@@ -2,6 +2,7 @@ package com.niri.emulator;
 
 import com.niri.emulator.data.core.CoreCrudService;
 import com.niri.emulator.data.core.CoreDTO;
+import com.niri.emulator.data.coreinput.CoreInputDTO;
 import com.niri.emulator.data.util.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Map;
 
 @Controller
-public class HomeController {
+public class CoreController {
 
     private CrudService<CoreDTO> coreCrudService;
 
@@ -34,10 +35,19 @@ public class HomeController {
         return model;
     }
 
+    @RequestMapping(value = "/{id}/keys", method=RequestMethod.GET)
+    public ModelAndView keys(@PathVariable long id) {
+        ModelAndView model = new ModelAndView("keys");
+        model.addObject("cr", coreCrudService.findById(id));
+        model.addObject("keys", coreCrudService.findById(id).getCoreInput());
+        model.addObject("key", new CoreInputDTO());
+        return model;
+    }
+
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public ModelAndView deleteUsers(@PathVariable long id) {
         coreCrudService.delete(id);
-        return new ModelAndView("redirect:/index");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping(value="/add", method = RequestMethod.POST)

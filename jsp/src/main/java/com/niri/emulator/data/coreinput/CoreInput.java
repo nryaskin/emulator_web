@@ -47,4 +47,12 @@ final public class CoreInput {
     public void setActionName(String actionName) {
         this.actionName = actionName;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -28,7 +28,7 @@ final public class Core {
     @OneToMany(mappedBy = "core")
     private List<Profile> profiles;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "core")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "core", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CoreInput> coreInput;
 
     public Core() {}
