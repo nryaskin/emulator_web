@@ -55,4 +55,8 @@ final public class CoreInput {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setKey(Long key) {
+        this.key = key;
+    }
 }

@@ -23,7 +23,6 @@
                  <tr>
                     <td><c:out value = "${key.key}"/></td>
                     <td><c:out value = "${key.actionName}"/></td>
-                    <td><a href="/${key.id}/delete">delete</a></td>
                  </tr>
               </c:forEach>
         </table>

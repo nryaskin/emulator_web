@@ -29,8 +29,8 @@ public class CoreInputController {
     }
 
     @RequestMapping(value = "/{id}/keys/add", method= RequestMethod.POST)
-    public ModelAndView keys(@PathVariable long id,
-                             @ModelAttribute("key") CoreInputDTO cI) {
+    public ModelAndView addKeys(@PathVariable long id,
+                                @ModelAttribute("key") CoreInputDTO cI) {
         ModelAndView model = new ModelAndView("keys");
         if(cI != null) {
             CoreDTO core = cCrudService.findById(id);

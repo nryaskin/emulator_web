@@ -72,15 +72,9 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(@RequestParam("id") long id,
-                               @RequestParam("name") String name,
-                               @RequestParam("path") String path) {
-        CoreDTO core = new CoreDTO();
-        core.setId(id);
-        core.setCoreName(name);
-        core.setCorePath(path);
+    public ModelAndView update(@ModelAttribute("cr")CoreDTO core) {
         coreCrudService.update(core);
-        return new ModelAndView("redirect:/index");
+        return new ModelAndView("redirect:/");
     }
 
 
