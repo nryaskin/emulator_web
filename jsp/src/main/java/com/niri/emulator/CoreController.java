@@ -24,9 +24,6 @@ public class CoreController {
         this.coreCrudService = coreCrudService;
     }
 
-    @Value("${home.message}")
-    private String message;
-
     @RequestMapping(value = "", method=RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView model = new ModelAndView("index");
@@ -76,6 +73,4 @@ public class CoreController {
         coreCrudService.update(core);
         return new ModelAndView("redirect:/");
     }
-
-
 }
