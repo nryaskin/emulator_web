@@ -5,27 +5,26 @@ import com.niri.emulator.data.dto.CoreInputDTO;
 import com.niri.emulator.data.util.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
+@RequestMapping("core/input")
 public class CoreInputController {
 
-//    private CrudService<CoreInputDTO> cICrudService;
-//    private CrudService<CoreDTO> cCrudService;
-//
-//    @Autowired
-//    public void setCoreCrudService(CrudService<CoreInputDTO> cICrudService) {
-//        this.cICrudService = cICrudService;
-//    }
-//
-//    @Autowired
-//    public void setcCrudService(CrudService<CoreDTO> cCrudService) {
-//        this.cCrudService = cCrudService;
-//    }
+    private CrudService<CoreInputDTO> coreInputCrudService;
+    private CrudService<CoreDTO> coreCrudService;
+
+    @Autowired
+    public void setCoreInputCrudService(CrudService<CoreInputDTO> coreInputCrudService) {
+        this.coreInputCrudService = coreInputCrudService;
+    }
+
+    @Autowired
+    public void setCoreCrudService(CrudService<CoreDTO> coreCrudService) {
+        this.coreCrudService = coreCrudService;
+    }
+
 //
 //    @RequestMapping(value = "/{id}/keys/add", method= RequestMethod.POST)
 //    public ModelAndView addKeys(@PathVariable long id,
