@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,21 +25,21 @@ public class CoreCrudService implements CrudService<CoreDTO> {
 
     private CoreDTO convertToDto(Core core) {
         CoreDTO coreDto = modelMapper.map(core, CoreDTO.class);
+        return coreDto;
+    }
 
+    private Optional<CoreDTO> convertToOptionalDto(Optional<Core> core) {
+        Optional<CoreDTO> coreDto = Optional.empty();
+        if (core.isPresent()) {
+            coreDto = Optional.of(modelMapper.map(core, CoreDTO.class));
+        }
         return coreDto;
     }
 
     private Core convertToEntity(CoreDTO coreDTO) throws ParseException {
         Core core = modelMapper.map(coreDTO, Core.class);
 
-        if (coreDTO.getId() != null) {
-            Core oldCore = repository.findById(core.getId()).get();
-            /*
-             *  Maybe do something if exists.
-             *
-             */
-        }
-        return  core;
+        return core;
     }
 
     @Autowired
@@ -63,12 +64,14 @@ public class CoreCrudService implements CrudService<CoreDTO> {
 
     @Transactional
     @Override
-    public CoreDTO delete(Long id) {
-        Core deleted = repository.findById(id).get();
+    public Optional<CoreDTO> delete(Long id) {
+        Optional<Core> deleted = repository.findById(id);
 
-        repository.delete(deleted);
+        if (deleted.isPresent()) {
+            repository.delete(deleted.get());
+        }
 
-        return convertToDto(deleted);
+        return convertToOptionalDto(deleted);
 
     }
 
@@ -85,19 +88,20 @@ public class CoreCrudService implements CrudService<CoreDTO> {
 
     @Transactional(readOnly = true)
     @Override
-    public CoreDTO findById(Long id) {
-        Core core = repository.findById(id).get();
+    public Optional<CoreDTO> findById(Long id) {
+        Optional<Core> core = repository.findById(id);
 
-        return convertToDto(core);
+        return convertToOptionalDto(core);
     }
 
     @Transactional
     @Override
-    public CoreDTO update(CoreDTO updatedEntry) {
-        Core core = repository.findById(updatedEntry.getId()).get();
+    public Optional<CoreDTO> update(CoreDTO updatedEntry) {
+        Optional<Core> core = repository.findById(updatedEntry.getId());
 
-        core.update(updatedEntry.getCoreName());
-
-        return convertToDto(core);
+        if (core.isPresent()) {
+            core.get().update(updatedEntry.getCoreName());
+        }
+        return convertToOptionalDto(core);
     }
 }

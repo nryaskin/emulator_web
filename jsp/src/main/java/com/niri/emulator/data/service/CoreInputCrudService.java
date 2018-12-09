@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +42,14 @@ public class CoreInputCrudService implements CrudService<CoreInputDTO> {
         return  CoreInput;
     }
 
+    private Optional<CoreInputDTO> convertToOptionalDto(Optional<CoreInput> core) {
+        Optional<CoreInputDTO> coreDto = Optional.empty();
+        if (core.isPresent()) {
+            coreDto = Optional.of(modelMapper.map(core, CoreInputDTO.class));
+        }
+        return coreDto;
+    }
+
     @Autowired
     CoreInputCrudService(CoreInputRepository repository) {
         this.repository = repository;
@@ -63,12 +72,13 @@ public class CoreInputCrudService implements CrudService<CoreInputDTO> {
 
     @Transactional
     @Override
-    public CoreInputDTO delete(Long id) {
-        CoreInput deleted = repository.findById(id).get();
+    public Optional<CoreInputDTO> delete(Long id) {
+        Optional<CoreInput> deleted = repository.findById(id);
 
-        repository.delete(deleted);
-
-        return convertToDto(deleted);
+        if (deleted.isPresent()) {
+            repository.delete(deleted.get());
+        }
+        return convertToOptionalDto(deleted);
 
     }
 
@@ -85,19 +95,20 @@ public class CoreInputCrudService implements CrudService<CoreInputDTO> {
 
     @Transactional(readOnly = true)
     @Override
-    public CoreInputDTO findById(Long id) {
-        CoreInput CoreInput = repository.findById(id).get();
+    public Optional<CoreInputDTO> findById(Long id) {
+        Optional<CoreInput> CoreInput = repository.findById(id);
 
-        return convertToDto(CoreInput);
+        return convertToOptionalDto(CoreInput);
     }
 
     @Transactional
     @Override
-    public CoreInputDTO update(CoreInputDTO updatedEntry) {
-        CoreInput coreInput = repository.findById(updatedEntry.getId()).get();
+    public Optional<CoreInputDTO> update(CoreInputDTO updatedEntry) {
+        Optional<CoreInput> coreInput = repository.findById(updatedEntry.getId());
 
-        coreInput.setActionName(updatedEntry.getActionName());
-
-        return convertToDto(coreInput);
+        if (coreInput.isPresent()) {
+            coreInput.get().setActionName(updatedEntry.getActionName());
+        }
+        return convertToOptionalDto(coreInput);
     }
 }
