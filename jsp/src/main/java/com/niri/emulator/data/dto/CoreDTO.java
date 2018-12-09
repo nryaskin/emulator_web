@@ -1,7 +1,6 @@
-package com.niri.emulator.data.core;
+package com.niri.emulator.data.dto;
 
-import com.niri.emulator.data.coreinput.CoreInputDTO;
-import com.niri.emulator.data.profile.ProfileDTO;
+import com.niri.emulator.data.entity.Core;
 
 import javax.validation.constraints.Size;
 import java.util.List;

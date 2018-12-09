@@ -1,7 +1,4 @@
-package com.niri.emulator.data.keymap;
-
-import com.niri.emulator.data.coreinput.CoreInput;
-import com.niri.emulator.data.profile.Profile;
+package com.niri.emulator.data.entity;
 
 import javax.persistence.*;
 

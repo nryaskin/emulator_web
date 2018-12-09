@@ -1,7 +1,4 @@
-package com.niri.emulator.data.keymap;
-
-import com.niri.emulator.data.coreinput.CoreInputDTO;
-import com.niri.emulator.data.profile.ProfileDTO;
+package com.niri.emulator.data.dto;
 
 public class KeyMapDTO {
     private Long id;

@@ -1,8 +1,8 @@
-package com.niri.emulator.data.coreinput;
+package com.niri.emulator.data.service;
 
-import com.niri.emulator.data.coreinput.CoreInput;
-import com.niri.emulator.data.coreinput.CoreInputDTO;
-import com.niri.emulator.data.coreinput.CoreInputRepository;
+import com.niri.emulator.data.dto.CoreInputDTO;
+import com.niri.emulator.data.entity.CoreInput;
+import com.niri.emulator.data.repository.CoreInputRepository;
 import com.niri.emulator.data.util.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

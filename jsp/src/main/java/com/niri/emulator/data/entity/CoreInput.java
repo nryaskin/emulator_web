@@ -1,6 +1,4 @@
-package com.niri.emulator.data.coreinput;
-
-import com.niri.emulator.data.core.Core;
+package com.niri.emulator.data.entity;
 
 import javax.persistence.*;
 

@@ -1,8 +1,7 @@
 package com.niri.emulator;
 
-import com.niri.emulator.data.core.CoreDTO;
-import com.niri.emulator.data.coreinput.CoreInput;
-import com.niri.emulator.data.coreinput.CoreInputDTO;
+import com.niri.emulator.data.dto.CoreDTO;
+import com.niri.emulator.data.dto.CoreInputDTO;
 import com.niri.emulator.data.util.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
