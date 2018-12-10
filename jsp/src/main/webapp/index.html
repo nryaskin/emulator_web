@@ -3,7 +3,6 @@
     <meta charset="utf-8">
     <title>The jQuery</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src = "public/cores.js"></script>
@@ -25,6 +24,37 @@
             <th>Path</th>
         </tr>
     </table>
+
+    <div id="dialog-form" title="Create new core">
+
+        <form>
+            <fieldset>
+                <label for="name">Core name</label>
+                <input type="text" name="name" id="name" value="Tutturu" class="text ui-widget-content ui-corner-all">
+                <label for="path">Path</label>
+                <input type="text" name="path" id="path" value="home/tutturu" class="text ui-widget-content ui-corner-all">
+
+                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+
+
+    <div id="cores-contain" class="ui-widget">
+        <h1>Existing Cores:</h1>
+        <table id="cores" class="ui-widget ui-widget-content">
+            <thead>
+            <tr class="ui-widget-header ">
+                <th>Core name</th>
+                <th>path</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <button id="create-core">Create new core</button>
 
 
     </body>

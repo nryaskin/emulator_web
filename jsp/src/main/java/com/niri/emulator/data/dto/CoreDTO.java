@@ -1,5 +1,6 @@
 package com.niri.emulator.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.niri.emulator.data.entity.Core;
 
 import javax.validation.constraints.Size;
@@ -8,9 +9,11 @@ import java.util.List;
 public final class CoreDTO {
     private Long id;
 
+    @JsonProperty("coreName")
     @Size(max = Core.MAX_LENGTH_CORE_NAME)
     private String coreName;
 
+    @JsonProperty("corePath")
     @Size(max = Core.MAX_LENGTH_CORE_PATH)
     private String corePath;
 
