@@ -40,8 +40,15 @@ public class CoreController {
         model.addObject("key", new CoreInputDTO());
         return model;
     }
+    @RequestMapping(value = "/{id}/confirmation", method = RequestMethod.GET)
+    public ModelAndView confirmDeletion(@PathVariable long id) {
+        ModelAndView model = new ModelAndView("confirmation");
+        model.addObject("id", id);
+        return model;
+    }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
     public ModelAndView deleteUsers(@PathVariable long id) {
         coreCrudService.delete(id);
         return new ModelAndView("redirect:/");

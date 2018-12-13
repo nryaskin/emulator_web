@@ -24,7 +24,7 @@
                     <td><c:out value = "${core.coreName}"/></td>
                     <td><c:out value = "${core.corePath}"/></td>
                     <td><a href="${core.id}/edit">edit</a></td>
-                    <td><a href="${core.id}/delete">delete</a></td>
+                    <td><a href="${core.id}/confirmation">delete</a></td>
                     <td><a href="${core.id}/keys">Keys</a></td>
                  </tr>
               </c:forEach>
