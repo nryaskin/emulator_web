@@ -17,6 +17,9 @@
 		<p><form:form action = "/update" method = "POST" modelAttribute="cr">
                 <table>
                 <tr>
+                     <form:input type="hidden" path="id" value="${cr.id}"/>
+                </tr>
+                <tr>
                     <td><form:label path="coreName">Core Name</form:label></td>
                     <td><form:input path="coreName"/></td>
                 </tr>
