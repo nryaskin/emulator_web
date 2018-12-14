@@ -37,6 +37,10 @@ $(document).ready(function() {
           }
     }
 
+    function deleteCore(id) {
+        alert(id);
+    }
+
     function updateCores() {
                 $("#cores tbody").empty();
                 $.ajax({
@@ -44,8 +48,35 @@ $(document).ready(function() {
                       url: 'core',
                       success: function(data){
                       $.each(data, function( index, value ) {
-                              var row = $("<tr><td>" + value.coreName + "</td><td>" + value.corePath + "</td></tr>");
+                              var row = $("<tr><td>" + value.coreName + "</td><td>" + value.corePath + "</td>" +
+                                            "<td>" + "<button id='edit-core" + value.id + "' CoreID='" + value.id + "' coreCrud='edit-core'>Edit</button>" + "</td>" +
+                                           "<td>" + "<button id='delete-core" + value.id + "' CoreID='" + value.id + "' coreCrud='delete-core'>Delete</button>" + "</td></tr>");
                               $("#cores tbody").append(row);
+                          });
+
+                          $( "button[coreCrud='edit-core']" ).button().on( "click", function() {
+                                dialog.dialog( "open" );
+                          });
+
+                          var confirmationDialog = $( "#dialog-confirm" ).dialog({
+                                                         autoOpen: false,
+                                                         height: 400,
+                                                         width: 350,
+                                                         modal: true,
+                                                         buttons: {
+                                                           "Yes": function() {
+                                                                var id = confirmationDialog.data('core-id');
+                                                                deleteCore(id);
+                                                                confirmationDialog.dialog( "close" );
+                                                           },
+                                                           Cancel: function() {
+                                                                confirmationDialog.dialog( "close" );
+                                                           }
+                                                         }
+                                                       });
+                          $( "button[coreCrud='delete-core']" ).button().on( "click", function() {
+                              var id = $(this).attr("CoreID");
+                              confirmationDialog.data('core-id', id).dialog( "open" );
                           });
                       },
                       error: function(jqXHR, textStatus, errorThrown){
@@ -85,6 +116,24 @@ $(document).ready(function() {
       return valid;
     }
 
+
+    function enableDeletion() {
+        $( "#dialog-confirm" ).dialog({
+              resizable: false,
+              height: "auto",
+              width: 400,
+              modal: true,
+              buttons: {
+                "Delete all items": function() {
+                  $( this ).dialog( "close" );
+                },
+                Cancel: function() {
+                  $( this ).dialog( "close" );
+                }
+              }
+            });
+    }
+
     dialog = $( "#dialog-form" ).dialog({
       autoOpen: false,
       height: 400,
@@ -104,24 +153,13 @@ $(document).ready(function() {
 
     form = dialog.find( "form" ).on( "submit", function( event ) {
       event.preventDefault();
-      addUser();
     });
-    $.ajax({
-        type: 'GET',
-        url: 'core',
-        success: function(data){
-        $.each(data, function( index, value ) {
-                var row = $("<tr><td>" + value.coreName + "</td><td>" + value.corePath + "</td></tr>");
-                $("#cores tbody").append(row);
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-                alert('error: ' + textStatus + ': ' + errorThrown);
-            }
-        });
+
+    updateCores();
 
 
     $( "#create-core" ).button().on( "click", function() {
           dialog.dialog( "open" );
      });
+
 });
