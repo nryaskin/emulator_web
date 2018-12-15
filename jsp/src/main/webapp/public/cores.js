@@ -38,7 +38,107 @@ $(document).ready(function() {
     }
 
     function deleteCore(id) {
-        alert(id);
+    var rest_url = 'core' + '/' + id;
+        $.ajax({
+                    type: 'DELETE',
+                    url: rest_url,
+                    success: function(){
+                        updateCores();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        alert('error: ' + textStatus + ': ' + errorThrown);
+                    }
+        });
+    }
+
+    function enableDelete() {
+        var confirmationDialog = $( "#dialog-confirm" ).dialog({
+                                                             autoOpen: false,
+                                                             height: 400,
+                                                             width: 350,
+                                                             modal: true,
+                                                             buttons: {
+                                                               "Yes": function() {
+                                                                    var id = confirmationDialog.data('core-id');
+                                                                    deleteCore(id);
+                                                                    confirmationDialog.dialog( "close" );
+                                                               },
+                                                               Cancel: function() {
+                                                                    confirmationDialog.dialog( "close" );
+                                                               }
+                                                             }
+                                                           });
+        $("button[coreCrud='delete-core']" ).button().on( "click", function() {
+            var id = $(this).attr("CoreID");
+            confirmationDialog.data('core-id', id).dialog( "open" );
+        });
+    }
+
+    function editCore(id) {
+        var cname = $( "#cname" );
+        var cpath = $( "#cpath" );
+        var rest_url = 'core' + '/' + id;
+        var data = {};
+        data.id = id;
+        data.coreName = cname.val();
+        data.corePath = cpath.val();
+        $.ajax({
+            type: 'PUT',
+            url: rest_url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            success: function(inData){
+                updateCores();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert('error: ' + textStatus + ': ' + errorThrown);
+            }
+        });
+    }
+
+    function enableEdit() {
+        var editDialog = $('edit-dialog-form').dialog(
+            {
+            autoOpen: false,
+            height: 400,
+            width: 350,
+            modal: true,
+            open: function( event, ui ) {
+                var id = editDialog.data('core-id');
+                var rest_url = 'core' + '/' + id;
+                $.ajax({
+                                    type: 'GET',
+                                    url: rest_url,
+                                    success: function(core){
+                                        $( "#cname" ).val(core.coreName);
+                                        $( "#cpath" ).val(core.corePath);
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown){
+                                        alert('error: ' + textStatus + ': ' + errorThrown);
+                                    }
+                });
+            },
+            buttons: {
+            "Edit": function() {
+                var id = editDialog.data('core-id');
+                editCore(id);
+                editDialog.dialog( "close" );
+            },
+            Cancel: function() {
+                editDialog.data('core-id', id).dialog( "close" );
+            }
+            }
+        });
+
+
+
+        $( "button[coreCrud='edit-core']" ).button().on( "click", function() {
+            var id = $(this).attr("CoreID");
+            editDialog.dialog( "open" );
+        });
+        editDialog.find( "form" ).on( "submit", function( event ) {
+            event.preventDefault();
+        });
     }
 
     function updateCores() {
@@ -54,30 +154,8 @@ $(document).ready(function() {
                               $("#cores tbody").append(row);
                           });
 
-                          $( "button[coreCrud='edit-core']" ).button().on( "click", function() {
-                                dialog.dialog( "open" );
-                          });
-
-                          var confirmationDialog = $( "#dialog-confirm" ).dialog({
-                                                         autoOpen: false,
-                                                         height: 400,
-                                                         width: 350,
-                                                         modal: true,
-                                                         buttons: {
-                                                           "Yes": function() {
-                                                                var id = confirmationDialog.data('core-id');
-                                                                deleteCore(id);
-                                                                confirmationDialog.dialog( "close" );
-                                                           },
-                                                           Cancel: function() {
-                                                                confirmationDialog.dialog( "close" );
-                                                           }
-                                                         }
-                                                       });
-                          $( "button[coreCrud='delete-core']" ).button().on( "click", function() {
-                              var id = $(this).attr("CoreID");
-                              confirmationDialog.data('core-id', id).dialog( "open" );
-                          });
+                          enableEdit()
+                          enableDelete();
                       },
                       error: function(jqXHR, textStatus, errorThrown){
                               alert('error: ' + textStatus + ': ' + errorThrown);
@@ -114,24 +192,6 @@ $(document).ready(function() {
         dialog.dialog( "close" );
       }
       return valid;
-    }
-
-
-    function enableDeletion() {
-        $( "#dialog-confirm" ).dialog({
-              resizable: false,
-              height: "auto",
-              width: 400,
-              modal: true,
-              buttons: {
-                "Delete all items": function() {
-                  $( this ).dialog( "close" );
-                },
-                Cancel: function() {
-                  $( this ).dialog( "close" );
-                }
-              }
-            });
     }
 
     dialog = $( "#dialog-form" ).dialog({
