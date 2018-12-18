@@ -41,6 +41,19 @@
         </form>
     </div>
 
+    <div id="profile-dialog-form" title="Create new profile">
+
+        <form>
+            <fieldset>
+                <label for="name">Profile name</label>
+                <input type="text" name="name" id="profName" value="Tutturu Profile" class="text ui-widget-content ui-corner-all">
+                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                <select id="profile-cores" class="ui-widget-content ui-corner-all"></select>
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+
     <div id="dialog-confirm">
         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>These item will be permanently deleted and cannot be recovered. Are you sure?</p>
     </div>
@@ -60,6 +73,19 @@
     </div>
     <button id="create-core">Create new core</button>
 
+    <div id="profile-contain" class="ui-widget">
+        <h1>Existing Cores:</h1>
+        <table id="profiles" class="ui-widget ui-widget-content">
+            <thead>
+            <tr class="ui-widget-header ">
+                <th>Profile name</th>s
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <button id="profile-create">Create new profile</button>
 
     </body>
 </html>

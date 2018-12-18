@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var dialog, form,
+    var dialog, editDialog, form,
     name = $( "#name" ),
     path = $( "#path" ),
     allFields = $( [] ).add( name ).add( path ),
@@ -97,7 +97,7 @@ $(document).ready(function() {
     }
 
     function enableEdit() {
-        var editDialog = $('edit-dialog-form').dialog(
+        editDialog = $('#edit-dialog-form').dialog(
             {
             autoOpen: false,
             height: 400,
@@ -125,7 +125,7 @@ $(document).ready(function() {
                 editDialog.dialog( "close" );
             },
             Cancel: function() {
-                editDialog.data('core-id', id).dialog( "close" );
+                editDialog.dialog( "close" );
             }
             }
         });
@@ -134,7 +134,7 @@ $(document).ready(function() {
 
         $( "button[coreCrud='edit-core']" ).button().on( "click", function() {
             var id = $(this).attr("CoreID");
-            editDialog.dialog( "open" );
+            editDialog.data('core-id', id).dialog( "open" );
         });
         editDialog.find( "form" ).on( "submit", function( event ) {
             event.preventDefault();
@@ -194,6 +194,48 @@ $(document).ready(function() {
       return valid;
     }
 
+    function enableProfile()
+    {
+        var profileCreateDialog = $('#profile-dialog-form').dialog(
+                {
+                autoOpen: false,
+                height: 400,
+                width: 350,
+                modal: true,
+                open: function( event, ui ) {
+                    $.ajax({
+                        type: 'GET',
+                        url: 'core',
+                        success: function(data){
+                            $("#profile-cores").empty();
+                            $.each(data, function( index, value ) {
+                                var select = $('<option value="' + value.id + '">' + value.coreName + "</option>");
+                                $("#profile-cores").append(select);
+                            })},
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert('error: ' + textStatus + ': ' + errorThrown);
+                        }
+                    });
+                },
+                buttons: {
+                "Create": function() {
+                    profileCreateDialog.dialog( "close" );
+                },
+                Cancel: function() {
+                    profileCreateDialog.dialog( "close" );
+                }
+                }
+            });
+
+            $( "#profile-create" ).button().on( "click", function() {
+                profileCreateDialog.dialog( "open" );
+            });
+            profileCreateDialog.find( "form" ).on( "submit", function( event ) {
+                event.preventDefault();
+            });
+
+    }
+
     dialog = $( "#dialog-form" ).dialog({
       autoOpen: false,
       height: 400,
@@ -216,7 +258,8 @@ $(document).ready(function() {
     });
 
     updateCores();
-
+    enableEdit();
+    enableProfile();
 
     $( "#create-core" ).button().on( "click", function() {
           dialog.dialog( "open" );

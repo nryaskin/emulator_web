@@ -30,7 +30,7 @@ public class CoreRestController {
         return coreCrudService.findAll();
     }
 
-    @GetMapping("/{id]")
+    @GetMapping("/{id}")
     public CoreDTO getCore(@PathVariable long id) {
         Optional<CoreDTO> coreDTO = coreCrudService.findById(id);
         return coreDTO.orElse(null);

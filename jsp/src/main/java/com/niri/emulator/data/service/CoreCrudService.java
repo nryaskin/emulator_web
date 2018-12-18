@@ -31,7 +31,7 @@ public class CoreCrudService implements CrudService<CoreDTO> {
     private Optional<CoreDTO> convertToOptionalDto(Optional<Core> core) {
         Optional<CoreDTO> coreDto = Optional.empty();
         if (core.isPresent()) {
-            coreDto = Optional.of(modelMapper.map(core, CoreDTO.class));
+            coreDto = Optional.of(modelMapper.map(core.get(), CoreDTO.class));
         }
         return coreDto;
     }

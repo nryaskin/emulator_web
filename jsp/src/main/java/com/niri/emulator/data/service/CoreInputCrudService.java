@@ -23,29 +23,29 @@ public class CoreInputCrudService implements CrudService<CoreInputDTO> {
 
     private CoreInputRepository repository;
 
-    private CoreInputDTO convertToDto(CoreInput CoreInput) {
-        CoreInputDTO CoreInputDto = modelMapper.map(CoreInput, CoreInputDTO.class);
+    private CoreInputDTO convertToDto(CoreInput coreInput) {
+        CoreInputDTO coreInputDto = modelMapper.map(coreInput, CoreInputDTO.class);
 
-        return CoreInputDto;
+        return coreInputDto;
     }
 
-    private CoreInput convertToEntity(CoreInputDTO CoreInputDTO) throws ParseException {
-        CoreInput CoreInput = modelMapper.map(CoreInputDTO, CoreInput.class);
+    private CoreInput convertToEntity(CoreInputDTO coreInputDTO) throws ParseException {
+        CoreInput coreInput = modelMapper.map(coreInputDTO, CoreInput.class);
 
-        if (CoreInputDTO.getId() != null) {
+        if (coreInputDTO.getId() != null) {
             //CoreInput oldCoreInput = repository.findById(CoreInput.getId()).get();
             /*
              *  Maybe do something if exists.
              *
              */
         }
-        return  CoreInput;
+        return  coreInput;
     }
 
-    private Optional<CoreInputDTO> convertToOptionalDto(Optional<CoreInput> core) {
+    private Optional<CoreInputDTO> convertToOptionalDto(Optional<CoreInput> coreInput) {
         Optional<CoreInputDTO> coreDto = Optional.empty();
-        if (core.isPresent()) {
-            coreDto = Optional.of(modelMapper.map(core, CoreInputDTO.class));
+        if (coreInput.isPresent()) {
+            coreDto = Optional.of(modelMapper.map(coreInput.get(), CoreInputDTO.class));
         }
         return coreDto;
     }
