@@ -31,7 +31,7 @@ public class ProfileCrudService implements CrudService<ProfileDTO> {
     private Optional<ProfileDTO> convertToOptionalDto(Optional<Profile> profile) {
         Optional<ProfileDTO> profileDto = Optional.empty();
         if (profile.isPresent()) {
-            profileDto = Optional.of(modelMapper.map(profile, ProfileDTO.class));
+            profileDto = Optional.of(modelMapper.map(profile.get(), ProfileDTO.class));
         }
         return profileDto;
     }

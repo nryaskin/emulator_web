@@ -41,6 +41,18 @@
         </form>
     </div>
 
+    <div id="edit-profile-dialog-form" title="Edit profile">
+
+        <form>
+            <fieldset>
+                <label for="name">Profile name</label>
+                <input type="text" name="name" id="pname" value="" class="text ui-widget-content ui-corner-all">
+                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+
     <div id="profile-dialog-form" title="Create new profile">
 
         <form>
@@ -78,7 +90,7 @@
         <table id="profiles" class="ui-widget ui-widget-content">
             <thead>
             <tr class="ui-widget-header ">
-                <th>Profile name</th>s
+                <th>Profile name</th>
             </tr>
             </thead>
             <tbody>
