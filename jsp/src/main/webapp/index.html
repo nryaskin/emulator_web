@@ -47,6 +47,7 @@
             <fieldset>
                 <label for="name">Profile name</label>
                 <input type="text" name="name" id="pname" value="" class="text ui-widget-content ui-corner-all">
+                <select id="profile-cores-edit" class="ui-widget-content ui-corner-all"></select>
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
@@ -86,11 +87,12 @@
     <button id="create-core">Create new core</button>
 
     <div id="profile-contain" class="ui-widget">
-        <h1>Existing Cores:</h1>
+        <h1>Profiles:</h1>
         <table id="profiles" class="ui-widget ui-widget-content">
             <thead>
             <tr class="ui-widget-header ">
                 <th>Profile name</th>
+                <th>Profile core</th>
             </tr>
             </thead>
             <tbody>

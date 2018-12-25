@@ -121,15 +121,15 @@ $(document).ready(function() {
                 var id = editDialog.data('core-id');
                 var rest_url = 'core' + '/' + id;
                 $.ajax({
-                                    type: 'GET',
-                                    url: rest_url,
-                                    success: function(core){
-                                        $( "#cname" ).val(core.coreName);
-                                        $( "#cpath" ).val(core.corePath);
-                                    },
-                                    error: function(jqXHR, textStatus, errorThrown){
-                                        alert('error: ' + textStatus + ': ' + errorThrown);
-                                    }
+                    type: 'GET',
+                    url: rest_url,
+                    success: function(core){
+                        $( "#cname" ).val(core.coreName);
+                        $( "#cpath" ).val(core.corePath);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        alert('error: ' + textStatus + ': ' + errorThrown);
+                    }
                 });
             },
             buttons: {
@@ -155,14 +155,16 @@ $(document).ready(function() {
 
     function editProfile(id) {
         var cname = $( "#pname" );
-        var rest_url = 'profile' + '/' + id;
+        var newCoreId = $('#profile-cores-edit').find(":selected").val();
+        var pr_rest_url = 'profile' + '/' + id;
+        var coreRestUrl = 'core/' + newCoreId;
         var data = {};
         data.id = id;
         data.profileName = cname.val();
         var on_get_core = function (data) {
             $.ajax({
                 type: 'PUT',
-                url: rest_url,
+                url: pr_rest_url,
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 success: function(inData){
@@ -174,12 +176,11 @@ $(document).ready(function() {
             });
         };
 
-
         $.ajax({
             type: 'GET',
-            url: rest_url,
-            success: function(profile){
-                data.core = profile.core;
+            url: coreRestUrl,
+            success: function(core){
+                data.core = core;
                 on_get_core(data);
             },
             error: function(jqXHR, textStatus, errorThrown){
@@ -190,27 +191,45 @@ $(document).ready(function() {
     }
 
     function enableProfileEdit() {
-            var profileEditDialog = $('#edit-profile-dialog-form').dialog(
-                {
-                autoOpen: false,
-                height: 400,
-                width: 350,
-                modal: true,
-                open: function( event, ui ) {
-                    var id = profileEditDialog.data('profile-id');
-                    var rest_url = 'profile' + '/' + id;
-                    $.ajax({
-                                        type: 'GET',
-                                        url: rest_url,
-                                        success: function(profile){
-                                            $( "#pname" ).val(profile.profileName);
-                                        },
-                                        error: function(jqXHR, textStatus, errorThrown){
-                                            alert('error: ' + textStatus + ': ' + errorThrown);
-                                        }
-                    });
-                },
-                buttons: {
+
+        var fillSelector = function(id) {
+            $.ajax({
+                type: 'GET',
+                url: 'core',
+                success: function(data){
+                    $("#profile-cores-edit").empty();
+                    $.each(data, function( index, value ) {
+                        var select = $('<option value="' + value.id + '">' + value.coreName + "</option>");
+                        $("#profile-cores-edit").append(select).val(id);
+                    })},
+                error: function(jqXHR, textStatus, errorThrown){
+                            alert('error: ' + textStatus + ': ' + errorThrown);
+                }
+            });
+        };
+
+        var profileEditDialog = $('#edit-profile-dialog-form').dialog(
+        {
+            autoOpen: false,
+            height: 400,
+            width: 350,
+            modal: true,
+            open: function( event, ui ) {
+                var id = profileEditDialog.data('profile-id');
+                var rest_url = 'profile' + '/' + id;
+                $.ajax({
+                    type: 'GET',
+                    url: rest_url,
+                    success: function(profile){
+                        $( "#pname" ).val(profile.profileName);
+                        fillSelector(profile.core.id);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        alert('error: ' + textStatus + ': ' + errorThrown);
+                    }
+                });
+            },
+            buttons: {
                 "Edit": function() {
                     var id = profileEditDialog.data('profile-id');
                     editProfile(id);
@@ -219,16 +238,16 @@ $(document).ready(function() {
                 Cancel: function() {
                     profileEditDialog.dialog( "close" );
                 }
-                }
-            });
+            }
+        });
 
-            $( "button[profileCrud='edit-profile']" ).button().on( "click", function() {
-                var id = $(this).attr("ProfileID");
-                profileEditDialog.data('profile-id', id).dialog( "open" );
-            });
-            profileEditDialog.find( "form" ).on( "submit", function( event ) {
-                event.preventDefault();
-            });
+        $( "button[profileCrud='edit-profile']" ).button().on( "click", function() {
+            var id = $(this).attr("ProfileID");
+            profileEditDialog.data('profile-id', id).dialog( "open" );
+        });
+        profileEditDialog.find( "form" ).on( "submit", function( event ) {
+            event.preventDefault();
+        });
     }
 
     function updateCores() {
@@ -287,25 +306,25 @@ $(document).ready(function() {
     function enableProfileDelete()
     {
         var confirmationDialog = $( "#dialog-confirm" ).dialog({
-                                                                     autoOpen: false,
-                                                                     height: 400,
-                                                                     width: 350,
-                                                                     modal: true,
-                                                                     buttons: {
-                                                                       "Yes": function() {
-                                                                            var id = confirmationDialog.data('profile-id');
-                                                                            deleteProfile(id);
-                                                                            confirmationDialog.dialog( "close" );
-                                                                       },
-                                                                       Cancel: function() {
-                                                                            confirmationDialog.dialog( "close" );
-                                                                       }
-                                                                     }
-                                                                   });
-                $("button[profileCrud='delete-profile']" ).button().on( "click", function() {
-                    var id = $(this).attr("profileID");
-                    confirmationDialog.data('profile-id', id).dialog( "open" );
-                });
+            autoOpen: false,
+            height: 400,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Yes": function() {
+                    var id = confirmationDialog.data('profile-id');
+                    deleteProfile(id);
+                    confirmationDialog.dialog( "close" );
+                },
+                Cancel: function() {
+                    confirmationDialog.dialog( "close" );
+                }
+            }
+        });
+        $("button[profileCrud='delete-profile']" ).button().on( "click", function() {
+            var id = $(this).attr("profileID");
+            confirmationDialog.data('profile-id', id).dialog( "open" );
+        });
     }
 
     function enableProfileCreate()
@@ -380,6 +399,7 @@ $(document).ready(function() {
             success: function(data){
                 $.each(data, function( index, profile ) {
                     var row = $("<tr><td>" + profile.profileName + "</td>" +
+                    "<td>" + profile.core.coreName + "</td>" +
                     "<td>" + "<button id='edit-profile" + profile.id + "' ProfileID='" + profile.id + "' profileCrud='edit-profile'>Edit</button>" + "</td>" +
                     "<td>" + "<button id='delete-profile" + profile.id +
                     "' profileID='" + profile.id + "' profileCrud='delete-profile'>Delete</button>" +
