@@ -1,6 +1,7 @@
 package com.niri.emulator.data.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,7 @@ final public class Profile {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "core_id")
+    @NotNull
     private Core core;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")

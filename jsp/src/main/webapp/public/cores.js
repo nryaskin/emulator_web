@@ -159,18 +159,34 @@ $(document).ready(function() {
         var data = {};
         data.id = id;
         data.profileName = cname.val();
+        var on_get_core = function (data) {
+            $.ajax({
+                type: 'PUT',
+                url: rest_url,
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                success: function(inData){
+                    updateProfiles();
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert('error: ' + textStatus + ': ' + errorThrown);
+                }
+            });
+        };
+
+
         $.ajax({
-            type: 'PUT',
+            type: 'GET',
             url: rest_url,
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            success: function(inData){
-                updateProfiles();
+            success: function(profile){
+                data.core = profile.core;
+                on_get_core(data);
             },
             error: function(jqXHR, textStatus, errorThrown){
                 alert('error: ' + textStatus + ': ' + errorThrown);
             }
         });
+
     }
 
     function enableProfileEdit() {
@@ -187,7 +203,7 @@ $(document).ready(function() {
                                         type: 'GET',
                                         url: rest_url,
                                         success: function(profile){
-                                            $( "#pname" ).val(core.coreName);
+                                            $( "#pname" ).val(profile.profileName);
                                         },
                                         error: function(jqXHR, textStatus, errorThrown){
                                             alert('error: ' + textStatus + ': ' + errorThrown);

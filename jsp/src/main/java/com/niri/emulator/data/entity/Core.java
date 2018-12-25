@@ -22,8 +22,8 @@ final public class Core {
     @Column(name = "core_path", length = MAX_LENGTH_CORE_PATH)
     private String path;
 
-    //@OneToMany(mappedBy = "core")
-    //private List<Profile> profiles;
+    @OneToMany(mappedBy = "core")
+    private List<Profile> profiles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "core", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CoreInput> coreInput;
@@ -46,13 +46,13 @@ final public class Core {
         this.coreName = coreName;
     }
 
-    //public List<Profile> getProfiles() {
-    //    return profiles;
-    //}
+    public List<Profile> getProfiles() {
+        return profiles;
+    }
 
-    //public void setProfiles(List<Profile> profiles) {
-    //    this.profiles = profiles;
-    //}
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
+    }
 
     public List<CoreInput> getCoreInput() {
         return coreInput;
