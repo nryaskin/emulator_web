@@ -6,7 +6,6 @@ $(document).ready(function() {
     allFields = $( [] ).add( name ).add( path ),
     tips = $( ".validateTips" );
 
-
     function updateTips( t ) {
           tips
             .text( t )
@@ -66,25 +65,26 @@ $(document).ready(function() {
     }
 
     function enableDelete() {
-        var confirmationDialog = $( "#dialog-confirm" ).dialog({
-                                                             autoOpen: false,
-                                                             height: 400,
-                                                             width: 350,
-                                                             modal: true,
-                                                             buttons: {
-                                                               "Yes": function() {
-                                                                    var id = confirmationDialog.data('core-id');
-                                                                    deleteCore(id);
-                                                                    confirmationDialog.dialog( "close" );
-                                                               },
-                                                               Cancel: function() {
-                                                                    confirmationDialog.dialog( "close" );
-                                                               }
-                                                             }
-                                                           });
-        $("button[coreCrud='delete-core']" ).button().on( "click", function() {
+        var confirmationDialog = $("#dialog-confirm").dialog({
+            autoOpen: false,
+            height: 400,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Yes": function() {
+                    var id = confirmationDialog.data('item-id');
+                    var method = confirmationDialog.data('method');
+                    method(id);
+                    confirmationDialog.dialog("close");
+                },
+                Cancel: function() {
+                    confirmationDialog.dialog( "close" );
+                }
+            }
+        });
+        $("button[coreCrud='delete-core']").button().on("click", function() {
             var id = $(this).attr("CoreID");
-            confirmationDialog.data('core-id', id).dialog( "open" );
+            confirmationDialog.data('item-id', id).data('method', deleteCore).dialog("open");
         });
     }
 
@@ -255,14 +255,8 @@ $(document).ready(function() {
                 $.ajax({
                       type: 'GET',
                       url: 'core',
-                      success: function(data){
-                      $.each(data, function( index, value ) {
-                              var row = $("<tr><td>" + value.coreName + "</td><td>" + value.corePath + "</td>" +
-                                            "<td>" + "<button id='edit-core" + value.id + "' CoreID='" + value.id + "' coreCrud='edit-core'>Edit</button>" + "</td>" +
-                                           "<td>" + "<button id='delete-core" + value.id + "' CoreID='" + value.id + "' coreCrud='delete-core'>Delete</button>" + "</td></tr>");
-                              $("#cores tbody").append(row);
-                          });
-
+                      success: function(cores){
+                          $("#coreTemplate").tmpl(cores).appendTo("#coresContainer");
                           enableEdit()
                           enableDelete();
                       },
@@ -305,52 +299,50 @@ $(document).ready(function() {
 
     function enableProfileDelete()
     {
-        var confirmationDialog = $( "#dialog-confirm" ).dialog({
+        var confirmationDialog = $("#dialog-confirm" ).dialog({
             autoOpen: false,
             height: 400,
             width: 350,
             modal: true,
             buttons: {
                 "Yes": function() {
-                    var id = confirmationDialog.data('profile-id');
-                    deleteProfile(id);
-                    confirmationDialog.dialog( "close" );
+                    var id = confirmationDialog.data('item-id');
+                    var method = confirmationDialog.data('method');
+                    method(id);
+                    confirmationDialog.dialog("close");
                 },
                 Cancel: function() {
-                    confirmationDialog.dialog( "close" );
+                    confirmationDialog.dialog("close");
                 }
             }
         });
-        $("button[profileCrud='delete-profile']" ).button().on( "click", function() {
+        $("button[profileCrud='delete-profile']").button().on("click", function() {
             var id = $(this).attr("profileID");
-            confirmationDialog.data('profile-id', id).dialog( "open" );
+            confirmationDialog.data('item-id', id).data('method', deleteProfile).dialog("open");
         });
     }
 
     function enableProfileCreate()
     {
-        var profileCreateDialog = $('#profile-dialog-form').dialog(
-                {
-                autoOpen: false,
-                height: 400,
-                width: 350,
-                modal: true,
-                open: function( event, ui ) {
-                    $.ajax({
-                        type: 'GET',
-                        url: 'core',
-                        success: function(data){
-                            $("#profile-cores").empty();
-                            $.each(data, function( index, value ) {
-                                var select = $('<option value="' + value.id + '">' + value.coreName + "</option>");
-                                $("#profile-cores").append(select);
-                            })},
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert('error: ' + textStatus + ': ' + errorThrown);
-                        }
-                    });
-                },
-                buttons: {
+        var profileCreateDialog = $('#profile-dialog-form').dialog({
+            autoOpen: false,
+            height: 400,
+            width: 350,
+            modal: true,
+            open: function( event, ui ) {
+                $.ajax({
+                    type: 'GET',
+                    url: 'core',
+                    success: function(cores){
+                        $("#profile-cores").empty();
+                        $("#coreOptionTemplate").tmpl(cores).appendTo("#profile-cores");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        alert('error: ' + textStatus + ': ' + errorThrown);
+                    }
+                });
+            },
+            buttons: {
                 "Create": function() {
                     var id = $('#profile-cores').find(":selected").val();
                     var core_url = 'core/' + id;
@@ -396,16 +388,8 @@ $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: 'profile',
-            success: function(data){
-                $.each(data, function( index, profile ) {
-                    var row = $("<tr><td>" + profile.profileName + "</td>" +
-                    "<td>" + profile.core.coreName + "</td>" +
-                    "<td>" + "<button id='edit-profile" + profile.id + "' ProfileID='" + profile.id + "' profileCrud='edit-profile'>Edit</button>" + "</td>" +
-                    "<td>" + "<button id='delete-profile" + profile.id +
-                    "' profileID='" + profile.id + "' profileCrud='delete-profile'>Delete</button>" +
-                    "</td>" + "</tr>");
-                    $("#profiles tbody").append(row);
-                });
+            success: function(profiles){
+                $("#profileTemplate").tmpl(profiles).appendTo("#profilesContainer"); 
                 enableProfileEdit();
                 enableProfileDelete();
             },

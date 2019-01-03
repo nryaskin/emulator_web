@@ -5,21 +5,46 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+    <script id="coreTemplate" type="text/x-jQuery-tmpl">
+        <tr>
+            <td>${coreName}</td>
+            <td>${corePath}</td>
+            <td>
+                <button id="edit-core${id}" CoreID="${id}" coreCrud="edit-core">Edit</button>
+            </td>
+            <td>
+                <button id="delete-core${id}" CoreID="${id}" coreCrud='delete-core'>Delete</button>
+            </td>
+        </tr>
+    </script>
+    <script id="profileTemplate" type="text/x-jQuery-tmpl">
+        <tr>
+            <td>${profileName}</td>
+            <td>${core.coreName}</td>
+            <td>
+                <button id="edit-profile${id}" ProfileID="${id}" profileCrud="edit-profile">Edit</button>
+            </td>
+            <td>
+                <button id="delete-profile${id}" profileID="${id}" profileCrud="delete-profile">Delete</button>
+            </td>
+        </tr>
+    </script>
+    <script id="coreOptionTemplate"  type="text/x-jQuery-tmpl">
+        <option value="${id}"> ${coreName}</option>
+    </script>
     <script src = "public/cores.js"></script>
     <link rel="stylesheet" href="public/emulator.css">
 </head>
     <body>
-    <p></p>
 
     <div id="dialog-form" title="Create new core">
-
         <form>
             <fieldset>
                 <label for="name">Core name</label>
                 <input type="text" name="name" id="name" value="Tutturu" class="text ui-widget-content ui-corner-all">
                 <label for="path">Path</label>
                 <input type="text" name="path" id="path" value="home/tutturu" class="text ui-widget-content ui-corner-all">
-
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
@@ -27,14 +52,12 @@
     </div>
 
     <div id="edit-dialog-form" title="Edit core">
-
         <form>
             <fieldset>
                 <label for="name">Core name</label>
                 <input type="text" name="name" id="cname" value="Tutturu" class="text ui-widget-content ui-corner-all">
                 <label for="path">Path</label>
                 <input type="text" name="path" id="cpath" value="home/tutturu" class="text ui-widget-content ui-corner-all">
-
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
@@ -42,7 +65,6 @@
     </div>
 
     <div id="edit-profile-dialog-form" title="Edit profile">
-
         <form>
             <fieldset>
                 <label for="name">Profile name</label>
@@ -55,7 +77,6 @@
     </div>
 
     <div id="profile-dialog-form" title="Create new profile">
-
         <form>
             <fieldset>
                 <label for="name">Profile name</label>
@@ -80,7 +101,7 @@
                 <th>path</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="coresContainer">
             </tbody>
         </table>
     </div>
@@ -95,7 +116,7 @@
                 <th>Profile core</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="profilesContainer">
             </tbody>
         </table>
     </div>
