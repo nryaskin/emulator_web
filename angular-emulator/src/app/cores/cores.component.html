@@ -1,0 +1,9 @@
+<h2>My cores</h2>
+<ul class="cores">
+  <li *ngFor="let core of cores"
+    [class.selected]="core === selectedCore"
+    (click)="onSelect(core)">
+    <span class="badge">{{core.id}}</span> {{core.name}}
+  </li>
+</ul>
+<app-core-detail [core]="selectedCore"></app-core-detail>

@@ -1,0 +1,10 @@
+<div *ngIf="core">
+  <h2>{{core.name | uppercase}} Details</h2>
+    <div><span>id: </span>{{core.id}}</div>
+    <div>
+      <label>name:
+        <input [(ngModel)]="core.name" placeholder="name">
+      </label>
+    </div>
+</div>
+
