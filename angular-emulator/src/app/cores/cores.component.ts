@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Core } from '../core';
-import { CORES } from '../mock-cores';
+import { CoreService } from '../core.service'
 
 @Component({
   selector: 'app-cores',
@@ -10,16 +10,17 @@ import { CORES } from '../mock-cores';
 export class CoresComponent implements OnInit {
 
 
-  cores = CORES;
-  selectedCore: Core;
+  cores: Core[];
 
-  constructor() { }
+  constructor(private coreService: CoreService) { }
 
   ngOnInit() {
+    this.getCores();
   }
 
-  onSelect(core: Core): void {
-    this.selectedCore = core;
+  getCores(): void {
+    this.coreService.getCores()
+      .subscribe(cores => this.cores = cores);
   }
 
 }

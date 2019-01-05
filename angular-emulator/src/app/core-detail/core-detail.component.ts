@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Core } from '../core'
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { CoreService } from '../core.service';
 
 @Component({
   selector: 'app-core-detail',
@@ -10,9 +13,24 @@ export class CoreDetailComponent implements OnInit {
 
   @Input() core: Core;  
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private coreService: CoreService,
+    private location: Location  
+  ) { }
 
   ngOnInit() {
+    this.getCore();
+  }
+
+  getCore(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.coreService.getCore(id)
+      .subscribe(core => this.core = core);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }
