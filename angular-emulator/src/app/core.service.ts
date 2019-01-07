@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Core } from './core';
-import { CORES } from './mock-cores'
+import { Core } from './cores/shared/core.model';
+import { CORES } from './mock/mock-cores'
 import { MessageService } from './message.service'
 
 const MESSAGE_FETCHED_ALL: string = 'CoreService: fetched cores'; 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Core } from '../core'
+import { Core } from '../cores/shared/core.model'
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CoreService } from '../core.service';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Core } from '../core';
+import { Core } from '../cores/shared/core.model';
 import { CoreService } from '../core.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
   getCores(): void {
     this.coreService.getCores()
-      .subscribe(cores => this.cores = cores.slice(1, 5));
+      .subscribe(cores => this.cores = cores.slice(0, 3));
   }
 
 }

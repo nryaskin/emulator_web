@@ -8,6 +8,7 @@ import { CoreDetailComponent } from './core-detail/core-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { KeysComponent } from './keys/keys.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CoresComponent,
     CoreDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    KeysComponent
   ],
   imports: [
     BrowserModule,
