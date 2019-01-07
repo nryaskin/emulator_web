@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CoreService } from '../core.service';
 
+const KEY_PATH: string = '/core/keys/';
+
 @Component({
   selector: 'app-core-detail',
   templateUrl: './core-detail.component.html',
@@ -33,4 +35,7 @@ export class CoreDetailComponent implements OnInit {
     this.location.back();
   }
 
+  goToKey(): void {
+    this.location.go(KEY_PATH + this.core.id.toString());
+  }
 }

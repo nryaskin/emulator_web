@@ -7,7 +7,8 @@
       </label>
     </div>
     <div>
-      <app-keys></app-keys>
+      <a routerLink="/core/keys/{{core.id}}">
+      <button>Set keys</button></a>
     </div>
     <button (click)="goBack()">go back</button>
 </div>

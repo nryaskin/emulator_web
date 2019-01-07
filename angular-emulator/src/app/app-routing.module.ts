@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoresComponent } from './cores/cores.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CoreDetailComponent } from './core-detail/core-detail.component';
+import { KeysComponent } from './keys/keys.component'
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'cores', component: CoresComponent },
   { path: 'detail/:id', component: CoreDetailComponent },
+  { path: 'core/keys/:id', component: KeysComponent },
 ];
 
 @NgModule({
