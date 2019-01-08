@@ -38,4 +38,9 @@ export class CoreDetailComponent implements OnInit {
   goToKey(): void {
     this.location.go(KEY_PATH + this.core.id.toString());
   }
+
+  save(): void {
+    this.coreService.updateCore(this.core)
+      .subscribe(() => this.goBack());
+  }
 }

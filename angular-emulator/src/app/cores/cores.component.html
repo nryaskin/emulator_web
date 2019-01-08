@@ -1,8 +1,19 @@
 <h2>My cores</h2>
+<div>
+  <label> Core name:
+    <input #coreName />
+    <input #corePath />
+  </label>
+  <button (click)="add(coreName.value, corePath.value); coreName.value=''; corePath.value=''">
+    add
+  </button>
+</div>
 <ul class="cores">
   <li *ngFor="let core of cores">
     <a routerLink="/detail/{{core.id}}">
       <span class="badge">{{core.id}}</span> {{core.name}}
     </a>
+    <button class="delete" title="delete core"
+      (click)="delete(core)">x</button>
   </li>
 </ul>
