@@ -94,8 +94,8 @@ $(document).ready(function() {
         var rest_url = 'core' + '/' + id;
         var data = {};
         data.id = id;
-        data.coreName = cname.val();
-        data.corePath = cpath.val();
+        data.name = cname.val();
+        data.path = cpath.val();
         $.ajax({
             type: 'PUT',
             url: rest_url,
@@ -277,8 +277,8 @@ $(document).ready(function() {
 
       if ( valid ) {
         var data = {};
-        data.coreName = name.val();
-        data.corePath = path.val();
+        data.name = name.val();
+        data.path = path.val();
 
       $.ajax({
               type: 'POST',

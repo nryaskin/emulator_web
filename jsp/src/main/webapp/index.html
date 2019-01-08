@@ -8,8 +8,8 @@
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
     <script id="coreTemplate" type="text/x-jQuery-tmpl">
         <tr>
-            <td>${coreName}</td>
-            <td>${corePath}</td>
+            <td>${name}</td>
+            <td>${path}</td>
             <td>
                 <button id="edit-core${id}" CoreID="${id}" coreCrud="edit-core">Edit</button>
             </td>
@@ -21,7 +21,7 @@
     <script id="profileTemplate" type="text/x-jQuery-tmpl">
         <tr>
             <td>${profileName}</td>
-            <td>${core.coreName}</td>
+            <td>${core.name}</td>
             <td>
                 <button id="edit-profile${id}" ProfileID="${id}" profileCrud="edit-profile">Edit</button>
             </td>

@@ -9,16 +9,16 @@ import java.util.List;
 public final class CoreDTO {
     private Long id;
 
-    @JsonProperty("coreName")
+    @JsonProperty("name")
     @Size(max = Core.MAX_LENGTH_CORE_NAME)
     private String coreName;
 
-    @JsonProperty("corePath")
+    @JsonProperty("path")
     @Size(max = Core.MAX_LENGTH_CORE_PATH)
     private String corePath;
 
     //private List<ProfileDTO> profiles;
-
+    @JsonProperty("keys")
     private List<CoreInputDTO> coreInput;
 
     public CoreDTO() {}

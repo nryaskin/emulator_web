@@ -14,6 +14,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("core")
 public class CoreRestController {
@@ -37,29 +38,32 @@ public class CoreRestController {
     }
 
     @PostMapping()
-    public ResponseEntity<Object> createCore(@RequestBody CoreDTO core) {
+    public CoreDTO createCore(@RequestBody CoreDTO core) {
         CoreDTO created = coreCrudService.create(core);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                         .buildAndExpand(created.getId()).toUri();
 
-        return ResponseEntity.created(location).build();
+        return created;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateCore(@RequestBody CoreDTO core) {
+    public CoreDTO updateCore(@RequestBody CoreDTO core) {
         Optional<CoreDTO> updated =  coreCrudService.update(core);
 
+        /*
         if (!updated.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.noContent().build();
+        */
+        return updated.orElse(null);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCore(@PathVariable long id) {
-        coreCrudService.delete(id);
+    public CoreDTO deleteCore(@PathVariable long id) {
+        return coreCrudService.delete(id).orElse(null);
     }
 
 }
