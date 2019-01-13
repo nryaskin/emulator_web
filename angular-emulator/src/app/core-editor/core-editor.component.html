@@ -1,0 +1,24 @@
+<form [formGroup]="coreForm" (ngSubmit)="onSubmit()">
+  <label>
+    Name:
+    <input type="text" formControlName="name" required>
+  </label>
+  <label>
+    Path:
+    <input type="text" formControlName="path" required>
+  </label>
+  <div formArrayName="keys">
+    <h3>Keys</h3> <button (click)="addKey()">Add Key</button>
+    
+    <div *ngFor="let key of keys.controls; let i=index">
+      <label>
+        Key:<label> id: {{i}}</label>
+          <input type="text" [formControlName]="i">
+      </label>
+    </div>
+  </div>
+  <button type="submit" [disabled]="!coreForm.valid">Submit</button>
+  <p>
+    Form Status: {{coreForm.status}}
+  </p>
+</form> 

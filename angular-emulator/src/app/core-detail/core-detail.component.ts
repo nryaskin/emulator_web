@@ -18,12 +18,13 @@ export class CoreDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private coreService: CoreService,
-    private location: Location  
+    private location: Location,
   ) { }
 
   ngOnInit() {
     this.getCore();
   }
+
 
   getCore(): void {
     const id = +this.route.snapshot.paramMap.get('id');
