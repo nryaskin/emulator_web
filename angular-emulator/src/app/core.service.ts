@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Core } from './cores/shared/core.model';
 import { MessageService } from './message.service';
 import { API_URL } from './backend-defs';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 
 const MESSAGE_FETCHED_ALL: string = 'CoreService: fetched cores'; 
 const MESSAGE_FETCHED_BY_ID: string = 'CoreService: fetched core id=${id}';
@@ -25,13 +26,39 @@ const httpOptions = {
 export class CoreService {
 
   constructor(private http: HttpClient,
+              private fb: FormBuilder,
               private messageService:MessageService) { }
 
+
+  coreForm = this.fb.group({
+    name: ['', Validators.required],
+    path: ['', Validators.required],
+    keys: this.fb.array([
+      this.fb.control('')
+    ])
+  });
 
   private log(message: string) {
     this.messageService.add(`CoreService: ${message}`);
   }
+  
+  get keys() {
+    return this.coreForm.get('keys') as FormArray;
+  }
 
+  addKey() {
+    this.keys.push(this.fb.control(''));
+  }
+
+  initFormGroup() {
+    this.coreForm.setValue({
+      name: '',
+      path: '',
+      key: this.fb.array([
+      this.fb.control('')
+      ]) 
+    });
+  }
 /**
  * Handle Http operation that failed.
  * Let the app continue.

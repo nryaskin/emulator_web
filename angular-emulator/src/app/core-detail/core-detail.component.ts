@@ -13,7 +13,8 @@ const KEY_PATH: string = '/core/keys/';
 })
 export class CoreDetailComponent implements OnInit {
 
-  @Input() core: Core;  
+  core: Core = { id: null, name: '', path: '', keys: []};
+  isLoadingResults = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +30,10 @@ export class CoreDetailComponent implements OnInit {
   getCore(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.coreService.getCore(id)
-      .subscribe(core => this.core = core);
+      .subscribe(core => { 
+                  this.core = core;
+                  this.isLoadingResults = false;
+                });
   }
 
   goBack(): void {
@@ -39,9 +43,15 @@ export class CoreDetailComponent implements OnInit {
   goToKey(): void {
     this.location.go(KEY_PATH + this.core.id.toString());
   }
-
-  save(): void {
-    this.coreService.updateCore(this.core)
-      .subscribe(() => this.goBack());
+  
+  deleteCore(id) {
+    this.isLoadingResults = true;
+    this.coreService.deleteCore(id)
+    .subscribe(core => {
+        this.isLoadingResults = false;
+        this.goBack();
+      }, (err) => {
+        this.isLoadingResults = false;
+      });
   }
 }

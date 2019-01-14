@@ -9,8 +9,9 @@ import { CoreService } from '../core.service'
 })
 export class CoresComponent implements OnInit {
 
-
-  cores: Core[];
+  displayedColumns: string[] = [ 'name', 'path'];
+  cores: Core[] = [];
+  isLoadingResults = true;
 
   constructor(private coreService: CoreService) { }
 
@@ -20,7 +21,12 @@ export class CoresComponent implements OnInit {
 
   getCores(): void {
     this.coreService.getCores()
-      .subscribe(cores => this.cores = cores);
+      .subscribe(cores => {
+                  this.cores = cores;
+                  this.isLoadingResults = false;
+                 }, err => {
+                  this.isLoadingResults = false;
+                 });
   }
 
   add(name: string, path: string): void {

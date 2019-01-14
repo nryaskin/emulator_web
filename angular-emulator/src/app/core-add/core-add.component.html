@@ -1,0 +1,30 @@
+<div class="core-container mat-elevation-z8">
+  <div class="core-loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-flat-button color="primary" [routerLink]="['/cores']"><mat-icon>list</mat-icon></a>
+  </div>
+  <mat-card class="core-card">
+    <form [formGroup]="coreForm" (ngSubmit)="onFormSubmit(coreForm.value)">
+      <mat-form-field class="core-full-width">
+        <input matInput placeholder="Core Name" formControlName="name"
+               [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!coreForm.get('name').valid && coreForm.get('name').touched">Please enter Core Name</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="core-full-width">
+        <input matInput placeholder="Core Path" formControlName="path"
+               [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!coreForm.get('path').valid && coreForm.get('path').touched">Please enter Core Path</span>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button type="submit" [disabled]="!coreForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
+      </div>
+    </form>
+  </mat-card>
+</div>

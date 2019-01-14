@@ -1,46 +1,36 @@
-/* Application-wide Styles */
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
-}
-h2, h3 {
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: lighter;
-}
-body {
-  margin: 2em;
-}
-body, input[type="text"], button {
-  color: #888;
-  font-family: Cambria, Georgia;
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+div.container{
+    margin: 0px 40px;
 }
 
-nav a {
-  padding: 5px 10px;
-  text-decoration: none;
-  margin-right: 10px;
-  margin-top: 10px;
-  display: inline-block;
-  background-color: #eee;
-  border-radius: 4px;
+.fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+  }
+
+  form.normal-form{
+    margin: 10px;
 }
 
-nav a:visited, a:link {
-  color: #607D8B;
+.controles-container{
+    width: 100%;
+    padding: 5%;    
 }
 
-nav a:hover {
-  color: #039be5;
-  background-color: #CFD8DC;
+.controles-container > * {
+    width: 100%;
+    }
+
+    .add-bottom-padding{
+        padding-bottom: 10px;
+    }
+    /* radio group */
+mat-radio-group mat-radio-button{
+    margin-left: 5px;
 }
 
-nav a.active {
-  color: #039be5;
-}
-
-/* everywhere else */
-* {
-  font-family: Arial, Helvetica, sans-serif;
+.button-row button{
+    margin: 5px;
 }

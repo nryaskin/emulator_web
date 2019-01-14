@@ -1,16 +1,24 @@
-<div *ngIf="core">
-  <h2>{{core.name | uppercase}} Details</h2>
-    <div><span>id: </span>{{core.id}}</div>
-    <div>
-      <label>name:
-        <input [(ngModel)]="core.name" placeholder="name">
-      </label>
-    </div>
-    <div>
-      <a routerLink="/core/keys/{{core.id}}">
-      <button>Set keys</button></a>
-    </div>
-    <button (click)="save()">save</button>
-    <button (click)="goBack()">go back</button>
+<div class="core-container mat-elevation-z8">
+  <div class="core-loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-flat-button color="primary" [routerLink]="['/cores']"><mat-icon>list</mat-icon></a>
+  </div>
+  <mat-card class="core-card">
+    <mat-card-header>
+      <mat-card-title><h2>{{core.name}}</h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <dl>
+        <dt>path:</dt>
+        <dd>{{core.path}}</dd>
+      </dl>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-flat-button color="primary" [routerLink]="['/core-edit', core.id]"><mat-icon>edit</mat-icon></a>
+      <a mat-flat-button color="warn" (click)="deleteCore(core.id)"><mat-icon>delete</mat-icon></a>
+    </mat-card-actions>
+  </mat-card>
 </div>
-

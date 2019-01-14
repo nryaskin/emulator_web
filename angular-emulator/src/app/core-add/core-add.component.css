@@ -1,0 +1,27 @@
+/* Structure */
+.core-container {
+  position: relative;
+  padding: 5px;
+}
+
+.core-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.core-full-width {
+  width: 100%;
+}
+
+.core-full-width:nth-last-child() {
+  margin-bottom: 10px;
+}
+
+.button-row {
+  margin: 10px 0;
+}
+
+.mat-flat-button {
+  margin: 5px;
+}

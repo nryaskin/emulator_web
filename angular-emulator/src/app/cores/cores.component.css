@@ -1,73 +1,49 @@
-/* CoresComponent's private CSS styles */
-.cores {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 15em;
-}
-.cores li {
+/* Structure */
+.cores-container {
   position: relative;
-  cursor: pointer;
-  background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 1.6em;
-  border-radius: 4px;
-}
- 
-.cores li:hover {
-  color: #607D8B;
-  background-color: #DDD;
-  left: .1em;
-}
- 
-.cores a {
-  color: #888;
-  text-decoration: none;
-  position: relative;
-  display: block;
-  width: 250px;
-}
- 
-.cores a:hover {
-  color:#607D8B;
-}
- 
-.cores .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #607D8B;
-  line-height: 1em;
-  position: relative;
-  left: -1px;
-  top: -4px;
-  height: 1.8em;
-  min-width: 16px;
-  text-align: right;
-  margin-right: .8em;
-  border-radius: 4px 0 0 4px;
+  padding: 5px;
 }
 
-button {
-  background-color: #eee;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  cursor: hand;
-  font-family: Arial;
-}
- 
-button:hover {
-  background-color: #cfd8dc;
-}
- 
-button.delete {
+.cores-table-container {
   position: relative;
-  left: 194px;
-  top: -32px;
-  background-color: gray !important;
-  color: white;
+  max-height: 400px;
+  overflow: auto;
 }
+
+table {
+  width: 100%;
+}
+
+.cores-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cores-rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+
+.mat-flat-button {
+  margin: 5px;
+}
+

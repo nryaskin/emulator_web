@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { CoreService } from '../core.service';
 
 @Component({
   selector: 'app-core-editor',
@@ -8,28 +9,15 @@ import { FormBuilder, FormArray, Validators } from '@angular/forms';
 })
 export class CoreEditorComponent implements OnInit {
 
-  coreForm = this.fb.group({
-    name: ['', Validators.required],
-    path: ['', Validators.required],
-    keys: this.fb.array([
-      this.fb.control('')
-    ])
-  });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private coreService: CoreService) { }
 
   ngOnInit() {
   }
 
-  get keys(): FormArray{
-    return this.coreForm.get('keys') as FormArray;
+  onClear() {
+    this.coreService.coreForm.reset();
+    this.coreService.initFormGroup();
   }
- 
-  addKey() {
-    this.keys.push(this.fb.control(''));
-  }
-  
-  onSubmit() {
-    console.warn(this.coreForm.value);
-  }
+
 }
