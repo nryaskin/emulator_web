@@ -13,7 +13,7 @@ const KEY_PATH: string = '/core/keys/';
 })
 export class CoreDetailComponent implements OnInit {
 
-  core: Core = { id: null, name: '', path: '', keys: []};
+  core: Core = { id: undefined, name: '', path: '', keys: []};
   isLoadingResults = true;
 
   constructor(

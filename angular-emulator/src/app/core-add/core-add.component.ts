@@ -23,16 +23,14 @@ export class CoreAddComponent implements OnInit {
     this.coreForm =this.fb.group({
       name: ['', Validators.required],
       path: ['', Validators.required],
-      keys: this.fb.array([
-        this.fb.control('')
-      ])
+      keys: this.fb.array([])
     });
   }
 
 
-  onFormSubmit(form: NgForm) {
+  onFormSubmit(core: Core) {
     this.isLoadingResults = true;
-    this.coreService.addCore(form.value as Core)
+    this.coreService.addCore(core)
     .subscribe(res => {
         let id = res['id'];
         this.isLoadingResults = false;

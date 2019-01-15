@@ -23,14 +23,13 @@ export class CoreEditComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.getCore(this.route.snapshot.params['id']);
     this.coreForm = this.fb.group({
       name: ['', Validators.required],
       path: ['', Validators.required],
       keys: this.fb.array([
-        this.fb.control('')
       ])
     });
+    this.getCore(this.route.snapshot.params['id']);
   }
 
   getCore(id) {
@@ -44,9 +43,8 @@ export class CoreEditComponent implements OnInit {
     });
   }
 
-  onFormSubmit(form: NgForm) {
+  onFormSubmit(update: Core) {
     this.isLoadingResults = true;
-    let update: Core = form.value() as Core;
     update.id = +this._id;
     this.coreService.updateCore(update)
       .subscribe(res => {
