@@ -16,6 +16,9 @@ import { KeysComponent } from './keys/keys.component';
 import { CoreEditorComponent } from './core-editor/core-editor.component';
 import { CoreEditComponent } from './core-edit/core-edit.component';
 import { CoreAddComponent } from './core-add/core-add.component';
+import { HeaderComponent } from './navigation/header/header.component';
+import { ProfileListComponent } from './profile/profile-list/profile-list.component';
+import { PaginationComponent } from './navigation/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { CoreAddComponent } from './core-add/core-add.component';
     KeysComponent,
     CoreEditorComponent,
     CoreEditComponent,
-    CoreAddComponent
+    CoreAddComponent,
+    HeaderComponent,
+    PaginationComponent,
+    ProfileListComponent,
   ],
   imports: [
     BrowserModule,

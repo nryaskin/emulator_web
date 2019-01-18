@@ -6,10 +6,15 @@ import com.niri.emulator.data.repository.ProfileRepository;
 import com.niri.emulator.data.util.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +46,15 @@ public class ProfileCrudService implements CrudService<ProfileDTO> {
 
         return profile;
     }
-    
+
+    private Page<ProfileDTO> mapProfilePageIntoDTOPage(Pageable pageRequest, Page<Profile> source) {
+        List<ProfileDTO> dtos = source.getContent().stream()
+                .map(profile -> convertToDto(profile))
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(dtos, pageRequest, source.getTotalElements());
+    }
+
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
@@ -95,6 +108,13 @@ public class ProfileCrudService implements CrudService<ProfileDTO> {
         Optional<Profile> profile = repository.findById(id);
 
         return convertToOptionalDto(profile);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<ProfileDTO> findPaginated(int page, int size) {
+        PageRequest pr = PageRequest.of(page, size);
+        return mapProfilePageIntoDTOPage(pr, repository.findAll(pr));
     }
 
     @Transactional

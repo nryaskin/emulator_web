@@ -6,9 +6,11 @@ import com.niri.emulator.data.repository.KeyMapRepository;
 import com.niri.emulator.data.util.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +92,11 @@ public class KeyMapCrudService implements CrudService<KeyMapDTO> {
         Optional<KeyMap> keyMap = repository.findById(id);
 
         return convertToOptionalDto(keyMap);
+    }
+
+    @Override
+    public Page<KeyMapDTO> findPaginated(int page, int size) {
+        throw new NotImplementedException();
     }
 
     @Transactional

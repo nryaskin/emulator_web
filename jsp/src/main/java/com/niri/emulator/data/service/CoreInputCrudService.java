@@ -6,9 +6,11 @@ import com.niri.emulator.data.repository.CoreInputRepository;
 import com.niri.emulator.data.util.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +101,11 @@ public class CoreInputCrudService implements CrudService<CoreInputDTO> {
         Optional<CoreInput> CoreInput = repository.findById(id);
 
         return convertToOptionalDto(CoreInput);
+    }
+
+    @Override
+    public Page<CoreInputDTO> findPaginated(int page, int size) {
+        throw new NotImplementedException();
     }
 
     @Transactional

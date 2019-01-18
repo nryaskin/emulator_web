@@ -6,6 +6,7 @@ import { CoreAddComponent} from './core-add/core-add.component';
 import { CoreEditComponent} from './core-edit/core-edit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { KeysComponent } from './keys/keys.component'
+import { ProfileListComponent } from './profile/profile-list/profile-list.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,11 @@ const routes: Routes = [
     path: 'core-edit/:id',
     component: CoreEditComponent,
     data: { title: 'Edit Core' }
+  },
+  {
+    path: 'profiles',
+    component: ProfileListComponent,
+    data: { title: 'Profiles list' }
   },
   { path: '',
     redirectTo: '/cores',

@@ -13,8 +13,8 @@ final public class Profile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "profile_name", length = MAX_LENGTH_PROFILE_NAME)
-    private String profileName;
+    @Column(name = "name", length = MAX_LENGTH_PROFILE_NAME)
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "core_id")
@@ -26,12 +26,12 @@ final public class Profile {
 
     public Profile() {}
 
-    public String getProfileName() {
-        return profileName;
+    public String getName() {
+        return name;
     }
 
-    public void setProfileName(String profileName) {
-        this.profileName = profileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Core getCore() {

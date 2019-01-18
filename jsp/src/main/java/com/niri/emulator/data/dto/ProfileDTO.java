@@ -1,5 +1,6 @@
 package com.niri.emulator.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.niri.emulator.data.entity.Profile;
 
 import javax.validation.constraints.Size;
@@ -9,11 +10,11 @@ public class ProfileDTO {
     private Long id;
 
     @Size(max = Profile.MAX_LENGTH_PROFILE_NAME)
-    private String profileName;
-
+    private String name;
 
     private CoreDTO core;
 
+    @JsonIgnore
     private List<KeyMapDTO> keyMaps;
 
     public ProfileDTO() {
@@ -27,12 +28,12 @@ public class ProfileDTO {
         this.id = id;
     }
 
-    public String getProfileName() {
-        return profileName;
+    public String getName() {
+        return name;
     }
 
-    public void setProfileName(String profileName) {
-        this.profileName = profileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public CoreDTO getCore() {
