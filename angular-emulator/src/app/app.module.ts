@@ -19,6 +19,7 @@ import { CoreAddComponent } from './core-add/core-add.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { ProfileListComponent } from './profile/profile-list/profile-list.component';
 import { PaginationComponent } from './navigation/pagination/pagination.component';
+import { ProfileDialogComponent } from './profile/profile-dialog/profile-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PaginationComponent } from './navigation/pagination/pagination.componen
     HeaderComponent,
     PaginationComponent,
     ProfileListComponent,
+    ProfileDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,7 @@ import { PaginationComponent } from './navigation/pagination/pagination.componen
     BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ProfileDialogComponent]
 })
 export class AppModule { }

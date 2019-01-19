@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../shared/profile.service';
 import { Profile } from '../shared/profile.module';
+import { MatDialog } from '@angular/material';
+import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
 
 const PROFILE_PAGE_ITEMS_SIZE: number = 10;
 const PROFILE_PAGE_START_NUMBER: number = 0;
@@ -12,7 +14,7 @@ const PROFILE_PAGE_START_NUMBER: number = 0;
 })
 export class ProfileListComponent implements OnInit {
 
-  displayedColumns: string[] = [ 'name', 'coreName'];
+  displayedColumns: string[] = [ 'name', 'coreName', "update", "delete"];
   profiles: Profile[] = [];
   page: number;
   size: number;
@@ -23,7 +25,8 @@ export class ProfileListComponent implements OnInit {
   totalPages: number;
   totalElements: number;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.page = PROFILE_PAGE_START_NUMBER;
@@ -43,6 +46,30 @@ export class ProfileListComponent implements OnInit {
       }, err => {
         this.isLoadingResults = false;
       })
+  }
+
+  openDialog(profile: Profile): void {
+    let dialogRef = this.dialog.open(ProfileDialogComponent, {
+      data: profile
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (profile == null) {
+        this.profileService.addProfile(result).subscribe(data => {
+          this.getProfiles(this.page, this.size);
+        });
+      } else {
+        this.profileService.updateProfile(result).subscribe(data => {
+          this.getProfiles(this.page, this.size);
+        })
+      }
+    })
+  }
+
+  deleteProfile(profile: Profile): void {
+    this.isLoadingResults = true;
+    let diagRef = this.profileService.deleteProfile(profile).subscribe(data => {
+      this.getProfiles(this.page, this.size);
+    });
   }
 
   goToPage(n: number): void {

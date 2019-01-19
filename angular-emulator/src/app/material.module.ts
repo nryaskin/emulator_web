@@ -22,6 +22,7 @@ import * as Material from "@angular/material";
     Material.MatIconModule,
     Material.MatCardModule,
     Material.MatListModule,
+    Material.MatDialogModule,
   ],
   exports: [
     Material.MatToolbarModule,
@@ -41,6 +42,7 @@ import * as Material from "@angular/material";
     Material.MatIconModule,
     Material.MatCardModule,
     Material.MatListModule,
+    Material.MatDialogModule,
   ],
   declarations: []
 })
