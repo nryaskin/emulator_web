@@ -7,6 +7,7 @@ import com.niri.emulator.data.util.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,7 +96,7 @@ public class KeyMapCrudService implements CrudService<KeyMapDTO> {
     }
 
     @Override
-    public Page<KeyMapDTO> findPaginated(int page, int size) {
+    public Page<KeyMapDTO> findPaginated(int page, int size, Sort sort) {
         throw new NotImplementedException();
     }
 

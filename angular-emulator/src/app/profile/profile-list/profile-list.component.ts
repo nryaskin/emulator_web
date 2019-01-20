@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../shared/profile.service';
 import { Profile } from '../shared/profile.module';
-import { MatDialog } from '@angular/material';
+import { MatDialog, Sort } from '@angular/material';
 import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
 
 const PROFILE_PAGE_ITEMS_SIZE: number = 10;
@@ -25,17 +25,23 @@ export class ProfileListComponent implements OnInit {
   totalPages: number;
   totalElements: number;
 
+
+  sortBy: string;
+  order: string;
+
   constructor(private profileService: ProfileService,
               public dialog: MatDialog) { }
 
   ngOnInit() {
     this.page = PROFILE_PAGE_START_NUMBER;
-    this.size = PROFILE_PAGE_ITEMS_SIZE;
+    this.size = PROFILE_PAGE_ITEMS_SIZE
+    this.sortBy = "unsorted";
+    this.order = "asc";
     this.getProfiles(this.page, this.size);
   }
 
   getProfiles(page: number, size: number): void {
-    this.profileService.getProfilesPage(page - 1, size)
+    this.profileService.getProfilesPageSorted(page - 1, size, this.sortBy, this.order)
       .subscribe(pages => {
           this.profiles = pages.content;
           this.isLast = pages.last;
@@ -84,6 +90,30 @@ export class ProfileListComponent implements OnInit {
 
   onPrev(): void {
     this.page--;
+    this.getProfiles(this.page, this.size);
+  }
+
+  sortProfiles(sort: Sort) {
+    const data = this.profiles.slice();
+    if (!sort.active || sort.direction === '') {
+      this.profiles = data;
+    }
+
+    const isAsc = sort.direction === 'asc';
+    switch (sort.active) {
+      case 'name':     
+        this.sortBy = "name";
+        this.order = sort.direction;
+        break;
+      case 'core-name': 
+        this.sortBy = "core-name";
+        this.order = sort.direction;
+        break;
+      default:
+        this.sortBy = "unsorted";
+        this.order = "asc";
+        break;
+    }
     this.getProfiles(this.page, this.size);
   }
 }

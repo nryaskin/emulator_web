@@ -43,10 +43,16 @@ export class ProfileService {
     }
   }
 
-  getProfilesPage(page: number, size: number): Observable<any>{
+  getProfilesPage(page: number, size: number): Observable<any> {
+    return this.getProfilesPageSorted(page, size, "unsorted", "asc");
+  }
+
+  getProfilesPageSorted(page: number, size: number, sortBy: string, order: string): Observable<any>{
     let params = new HttpParams()
       .set('page', page.toString())
-      .set('size', size.toString());
+      .set('size', size.toString())
+      .set("sortby", sortBy)
+      .set("order", order);
     return this.http.get<any>(`${API_URL}/profile`, {headers: httpOptionsCommon.headers, params: params})
       .pipe(
         tap(_=>this.log('fetched profiles')),

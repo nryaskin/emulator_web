@@ -6,10 +6,7 @@ import com.niri.emulator.data.repository.ProfileRepository;
 import com.niri.emulator.data.util.CrudService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,8 +109,8 @@ public class ProfileCrudService implements CrudService<ProfileDTO> {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<ProfileDTO> findPaginated(int page, int size) {
-        PageRequest pr = PageRequest.of(page, size);
+    public Page<ProfileDTO> findPaginated(int page, int size, Sort sort) {
+        PageRequest pr = PageRequest.of(page, size, sort);
         return mapProfilePageIntoDTOPage(pr, repository.findAll(pr));
     }
 
