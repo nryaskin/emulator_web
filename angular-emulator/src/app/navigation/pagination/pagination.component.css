@@ -1,3 +1,7 @@
 /* pagination.component.scss */
 .pagination {
 }
+
+.mat-button.mat-small {
+    min-width: 1%;
+}

@@ -32,7 +32,7 @@ export class PaginationComponent {
   }
 
   totalPages(): number {
-    return Math.ceil(this.count / this.perPage) || 0;
+    return this.count || 0;
   }
 
   lastPage(): boolean {
@@ -40,7 +40,7 @@ export class PaginationComponent {
   }
 
   getPages(): number[] {
-    const c = Math.ceil(this.count / this.perPage);
+    const c = this.count;
     const p = this.page || 1;
     const pagesToShow = this.pagesToShow || 9;
     const pages: number[] = [];

@@ -20,6 +20,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { ProfileListComponent } from './profile/profile-list/profile-list.component';
 import { PaginationComponent } from './navigation/pagination/pagination.component';
 import { ProfileDialogComponent } from './profile/profile-dialog/profile-dialog.component';
+import { SortingComponent } from './sorting/sorting.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ProfileDialogComponent } from './profile/profile-dialog/profile-dialog.
     PaginationComponent,
     ProfileListComponent,
     ProfileDialogComponent,
+    SortingComponent,
   ],
   imports: [
     BrowserModule,

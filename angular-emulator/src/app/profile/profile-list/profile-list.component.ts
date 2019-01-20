@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material';
 import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
 
 const PROFILE_PAGE_ITEMS_SIZE: number = 10;
-const PROFILE_PAGE_START_NUMBER: number = 0;
+const PROFILE_PAGE_START_NUMBER: number = 1;
 
 @Component({
   selector: 'app-profile-list',
@@ -35,7 +35,7 @@ export class ProfileListComponent implements OnInit {
   }
 
   getProfiles(page: number, size: number): void {
-    this.profileService.getProfilesPage(page, size)
+    this.profileService.getProfilesPage(page - 1, size)
       .subscribe(pages => {
           this.profiles = pages.content;
           this.isLast = pages.last;
